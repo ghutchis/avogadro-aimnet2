@@ -4,21 +4,21 @@ dependencies = [
   "aimnet>=0.1.0", "setuptools>=82.0.0,<83",
 ]
 license = "BSD-3-Clause"
-name = "avogadro-aimnet"
+name = "avogadro-aimnet2"
 requires-python = ">=3.11,<3.14"
 version = "0.1.0"
 description = "Calculate energies and charges using the AIMNet2 models"
 
 [project.scripts]
-avogadro-aimnet = "avogadro_aimnet:main"
-avogadro-aimnet-setup = "avogadro_aimnet:setup"
+avogadro-aimnet2 = "avogadro_aimnet2:main"
+avogadro-aimnet2-setup = "avogadro_aimnet2:setup"
 
 [build-system]
 build-backend = "hatchling.build"
 requires = ["hatchling"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/avogadro_aimnet"]
+packages = ["src/avogadro_aimnet2"]
 
 [tool.avogadro]
 minimum-avogadro-version = "1.103"
@@ -61,10 +61,10 @@ channels = ["conda-forge"]
 platforms = ["win-64", "linux-64", "osx-arm64"]
 
 [tool.pixi.pypi-dependencies]
-avogadro_aimnet = { path = ".", editable = true }
+avogadro_aimnet2 = { path = ".", editable = true }
 
 [tool.pixi.tasks]
-setup = { cmd = "avogadro-aimnet-setup", env = { CONDA_NO_PLUGINS = "true" } }
+setup = { cmd = "avogadro-aimnet2-setup", env = { CONDA_NO_PLUGINS = "true" } }
 
 [tool.pixi.dependencies]
 python = ">=3.11,<3.14"

@@ -1,10 +1,10 @@
 #  This source file is part of the Avogadro project.
 #  This source code is released under the 3-Clause BSD License, (see "LICENSE").
 
-"""Entry point for the avogadro-aimnet-energy plugin.
+"""Entry point for the avogadro-aimnet2 plugin.
 
 Avogadro calls this as:
-    avogadro-aimnet-energy <identifier> [--lang <locale>] [--debug]
+    avogadro-aimnet2 <identifier> [--lang <locale>] [--debug]
 
 with the molecule bootstrap JSON on stdin (one compact JSON line).
 """
@@ -47,7 +47,7 @@ def setup():
     print("AIMNet2-NSE setup complete.")
 
 def main():
-    parser = argparse.ArgumentParser("avogadro-aimnet-energy")
+    parser = argparse.ArgumentParser("avogadro-aimnet2")
     parser.add_argument("feature")
     parser.add_argument("--lang", nargs="?", default="en")
     parser.add_argument("--protocol", nargs="?", default="binary-v1")
