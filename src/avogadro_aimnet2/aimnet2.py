@@ -54,17 +54,23 @@ def run(model_name: str = "aimnet2"):
                 else:
                     request.send_energies(energies_np)
             else:
+                # single non-batch request
                 data = {
-                    "coord": np.array([coords], dtype=np.float32),   # (1, N, 3)
-                    "numbers": atoms[np.newaxis],                     # (1, N)
-                    "charge": np.array([charge], dtype=np.float32),  # (1,)
+                    "coord": np.array([coords], dtype=np.float32),
+                    "numbers": atoms[np.newaxis],
+                    "charge": np.array([charge], dtype=np.float32),
                 }
                 if use_mult:
                     data["mult"] = np.array([mult], dtype=np.float32)
-                results = calc(data, forces=request.wants_gradient)
+                need_forces = (
+                    request.wants_gradient or request.wants_energy_and_gradient
+                )
+                results = calc(data, forces=need_forces)
                 energy = float(results["energy"][0]) * _HARTREE_TO_KJ_MOL
-                if request.wants_gradient:
-                    # forces = -gradient; convert and negate
+                if request.wants_energy_and_gradient:
+                    grad_np = -results["forces"][0] * _HARTREE_TO_KJ_MOL
+                    request.send_energy_and_gradient(energy, grad_np)
+                elif request.wants_gradient:
                     grad_np = -results["forces"][0] * _HARTREE_TO_KJ_MOL
                     request.send_gradient(grad_np)
                 else:
