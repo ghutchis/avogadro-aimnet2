@@ -6,8 +6,16 @@
 import json
 import sys
 
+# Redirect stdout to stderr during imports so that third-party warnings
+# (e.g. Warp DeprecationWarning) don't corrupt the binary protocol stream.
+_real_stdout = sys.stdout
+sys.stdout = sys.stderr
+
 import numpy as np
 from aimnet.calculators import AIMNet2Calculator
+
+sys.stdout = _real_stdout
+del _real_stdout
 
 from .energy import EnergyServer
 
